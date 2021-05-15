@@ -3,3 +3,22 @@
 .h4--sans {
 	font-size:.7rem;
 }
+
+.header__section--left,
+.header__section--right {
+  -ms-flex:1 1 33%;
+  -webkit-box-flex:1;
+  flex:1 1 33%
+}
+
+@media (max-width: 850px) {
+  .header__section--right {
+    flex-basis: 25%;
+  }
+}
+
+@media (max-width: 768px) {
+  .header__section--right {
+    flex-basis: 33%;
+  }
+}
