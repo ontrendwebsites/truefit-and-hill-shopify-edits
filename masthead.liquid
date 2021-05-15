@@ -1,0 +1,26 @@
+<section class="masthead">
+  <div class="masthead__content wrapper">
+    <div class="masthead__text">
+      <h1 class="masthead__heading h1--primary">{{ heading | raw }}</h1>
+      {% if subheading | size > 0 %}
+        <h2 class="masthead__subheading  para">{{ subheading }}</h2>
+      {% endif %}      
+    </div>
+    <h3>
+      {{ page_title }}
+      {% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}
+      {% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}
+    </h3>
+    <p>
+      {% if page_description %}{{ page_description | escape }}{% endif %}
+    </p>
+  </div>
+  {% if filter %}
+    {% include 'filter' with {
+      collectionName: 'journal',
+      filterType: filterType,
+      tags: tags,
+      activeTags: activeTag
+    } %}
+  {% endif %}
+</section>

@@ -7,7 +7,6 @@
 {% assign filterType = 'filter' %}
 {% assign allJournalArticles = blog.articles %}
 
-
 {% include 'masthead' with {
   heading: 'Journal<span class="icon__diamond">&#9670;</span>1805',
   collectionName: {{ blog.title }}
@@ -16,9 +15,6 @@
   tags: blog.all_tags,
   activeTag: activeTag
 } %}
-
-<h1>  {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}</h1>
-<p>{% if page_description %}{{ page_description | escape }}{% endif %}</p>
 
 {% paginate blog.articles by 12 %}
   {% assign loadMoreEnabled = paginate.next.is_link == true %}
