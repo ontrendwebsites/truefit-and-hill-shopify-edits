@@ -22,11 +22,3 @@
     flex-basis: 33%;
   }
 }
-
-.filter {
-  background-color: rgba(13, 30, 51, .6);
-}
-
-.filter__item {
-  color: hsla(0,0%,100%,1);
-}
