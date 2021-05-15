@@ -42,11 +42,12 @@
               </li>
             {% endif %}
           {% endfor %}
-          <!--
-      <li class="header__item header__item--desktop">
+          {% comment %}
+          <li class="header__item header__item--desktop">
             <a class="header__link" href="/account">Account</a>
           </li>
-      -->
+          {% endcomment %}
+          {% comment %}
           {% if settings.currencyEnabled %}
           <li class="header__item header__functional">
             <div class="header__link header__currency">
@@ -54,7 +55,7 @@
             </div>
           </li>
           {% endif %}
-
+          {% endcomment %}
           {% if cart.item_count !=0 %}
           <li class="header__item header__functional">
             <button 
