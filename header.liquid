@@ -10,7 +10,7 @@
             </button>
             {% include 'nav' %}
           </li>
-          {% for link in linklists.header.links %}
+          {% for link in linklists.header-update.links %}
             {% if forloop.index <= 2%}
               <li class="header__item header__item--desktop">
                 <a class="header__link" href="{{ link.url }}">{{ link.title }}</a>
@@ -35,7 +35,7 @@
       </div>
       <div class="header__section header__section--right">
         <ul class="header__list">
-          {% for link in linklists.header.links %}
+          {% for link in linklists.header-update.links %}
             {% if forloop.index > 2 %}
               <li class="header__item header__item--desktop">
                 <a class="header__link" href="{{ link.url }}">{{ link.title }}</a>
@@ -54,6 +54,8 @@
             </div>
           </li>
           {% endif %}
+
+          {% if cart.item_count !=0 %}
           <li class="header__item header__functional">
             <button 
               class="header__cart js-cart__toggle"
@@ -66,6 +68,7 @@
                 <span class="header__cart-total js-cart__items-count">{{ cart.items | size }}</span>
               </button>
           </li>
+          {% endif %}
         </ul>
       </div>
     </div>
