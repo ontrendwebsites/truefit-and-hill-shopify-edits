@@ -1,0 +1,10 @@
+<form class="search" action="/search">
+  <input
+    class="search-field"
+    type="text"
+    placeholder="search shaving, cologne etc."
+    name="q"
+    value="{{ search.terms | escape }}"
+  />
+  <input class="search-submit" type="submit" value="Search" />
+</form>
