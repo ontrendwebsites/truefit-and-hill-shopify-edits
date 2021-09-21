@@ -1,0 +1,308 @@
+{% comment %} Logic {% endcomment %}
+{% assign inverted = false %}
+{% if template.name == 'account'
+  or template.name == 'addresses'
+  or template.name == 'blog'
+  or page_title == 'Challenge'
+  or template.name == 'login'
+  or template.name == 'order'
+  or template.name == 'page'
+  or template.name == 'product'
+  or template.name == 'register'
+  or template.name == 'reset_password'
+  or template.name == 'search'
+  or template.name == 'blog'
+  or template.name == 'article'
+  or template.name == '404' %}
+  {% assign inverted = true %}
+{% endif %}
+
+{% assign pageTitle = page_title %}
+{%- if current_tags -%}
+  {% assign meta_tags = current_tags | join: ', ' %}
+  {% assign pageTitle = pageTitle | append: ' | ' | append: 'general.meta.tags' | t: tags: meta_tags %}
+{%- endif -%}
+
+{%- if current_page != 1 -%}
+  {% assign pageTitle = pageTitle | append: ' | ' | append: 'general.meta.page' | t: page: current_page %}
+{%- endif -%}
+
+{%- unless page_title contains shop.name -%}
+  {% assign pageTitle = pageTitle | append: ' | ' | append: shop.name %}
+{%- endunless -%}
+
+{% if page_title == 'challenge' %}
+  {% assign pageClass = page_title | handleize %}
+{% elsif template.name == 'article' or template.name == 'blog' %}
+  {% assign pageClass = 'page-' | append: template.name %}
+{% else %}
+  {% assign pageClass = '' %}
+{% endif %}
+
+{% comment %} MARKUP {% endcomment %}
+<!DOCTYPE html>
+<html dir="ltr" lang="en-GB" class="{{ pageClass }}">
+  <head>
+    <!-- BEGIN PRIVY WIDGET CODE -->
+    <script type='text/javascript'> var _d_site = _d_site || '44385C7165E2ECD22068BA88'; </script>
+    <script src='https://widget.privy.com/assets/widget.js'></script>
+    <!-- END PRIVY WIDGET CODE -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    {% comment %} Title {% endcomment %}
+    <title>{{ page_title }}{% if current_tags | size %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% unless template == 'index' %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+    {% comment %} Meta {% endcomment %}
+    <meta name="description" content="{{ page_description | default: shop.description | default: shop.name }}" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="geo.placename" content="{{ pageTitle }}" />
+    <meta name="msapplication-TileColor" content="#0d1e33" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <meta name="theme-color" content="#0d1e33" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    {% comment %} DC terms {% endcomment %}
+    <meta name="dcterms.Contributor" content="{{ shop.name }}" />
+    <meta name="dcterms.Coverage" content="{{ shop.secure_url }}" />
+    <meta name="dcterms.Creator" content="Rotate°" />
+    <meta name="dcterms.Description" content="{{ page_description | default: shop.description | default: shop.name }}" />
+    <meta name="dcterms.Format" content="text/html" />
+    <meta name="dcterms.Identifier" content="{{ shop.secure_url }}" />
+    <meta name="dcterms.Language" content="en" />
+    <meta name="dcterms.Publisher" content="{{ shop.name }}" />
+    <meta name="dcterms.Rights" content="Copyright &copy;2017 {{ shop.name }}." />
+    <meta name="dcterms.Title" content="{{ page_title }}" />
+    <meta name="dcterms.Type" content="text/html" />
+
+    {% comment %} Twitter Card data {% endcomment %}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{ page_title }}" />
+    <meta name="twitter:description" content="{{ page_description | default: shop.description | default: shop.name }}" />
+
+    {% comment %} Open Graph data {% endcomment %}
+    <meta property="og:title" content="{{ page_title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ shop.secure_url }}" />
+    <meta property="og:description" content="{{ page_description | default: shop.description | default: shop.name }}" />
+    <meta property="og:site_name" content="{{ shop.name }}" />
+    <meta property="og:locale" content="en_MY" />
+    <meta property="og:site_name" content="{{ shop.name }}" />
+    <meta property="og:title" content="{{ shop.name }}" />
+
+    {% comment %} Twitter and Open Graph Image data {% endcomment %}
+    {%- if template == 'product' -%}
+      <meta name="twitter:image" content="{{ product | img_url: '270x270' }}" />
+      <meta property="og:image" content="{{ product | img_url: '270x270' }}" />
+    {%- else -%}
+      <meta name="twitter:image" content="{{ '' | asset_img_url: '270x270' }}" />
+      <meta property="og:image" content="{{ '' | asset_img_url: '270x270' }}" />
+    {%- endif -%}
+
+    {% comment %} Preload {% endcomment %}
+    <link rel="author" href="/humans.txt" type="text/plain" />
+    <link rel="canonical" href="{{ canonical_url }}" />
+
+    <link rel="dns-prefetch" href="https://cdn.shopify.com" />
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin="anonymous" />
+
+
+    <link rel="preload" href="{{ 'Knockout-49.woff2' | asset_url| split:'?' | first }}" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="{{ 'Knockout-51.woff2' | asset_url| split:'?' | first }}" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="{{ 'Portrait-Light-Web.woff2' | asset_url| split:'?' | first }}" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="{{ 'SackersGothicStd-Heavy.woff2' | asset_url| split:'?' | first }}" as="font" crossorigin="anonymous" />
+
+    <link rel="preload" href="{{ 'mains.css' | asset_url }}" as="style" crossorigin="anonymous" />
+
+    <link rel="preload" href="{{ 'vendor.js' | asset_url }}" as="script" crossorigin="anonymous" />
+    <link rel="preload" href="{{ 'mains.js' | asset_url }}" as="script" crossorigin="anonymous" />
+
+    {% comment %} PWA {% endcomment %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ 'apple-touch-icon.png' | asset_url }}" />
+    <link rel="icon" type="image/png" href="{{ 'favicon-32x32.png' | asset_url }}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ 'favicon-16x16.png' | asset_url }}" sizes="16x16" />
+    <link rel="manifest" href="{{ 'manifest.json' | asset_url }}" />
+    <link rel="mask-icon" href="{{ 'safari-pinned-tab.svg' | asset_url }}" color="#d8d8ff" />
+
+    {% comment %} CSS {% endcomment %}
+    <link rel="stylesheet" href="{{ 'mains.css' | asset_url }}" crossorigin="anonymous" />
+
+    {% comment %} JS {% endcomment %}
+    <script src="{{ 'vendor.js' | asset_url }}" crossorigin="anonymous" defer></script>
+    <script src="{{ 'mains.js' | asset_url }}" crossorigin="anonymous" defer></script>
+
+    {% comment %} Shopify currencies script {% endcomment %}
+    <script src="/services/javascripts/currencies.js"></script>
+
+    {% comment %} Free Gift settings {% endcomment %}
+    <script>
+      var settings = {
+        {%- if settings.country != blank  -%}
+        'country': '{{ settings.country }}',
+        'countries': [
+          {% for link in linklists['store-selector'].links %}
+            { 'code': '{{ link.title }}', 'url': '{{ link.url }}' },
+          {% endfor %}
+        ],
+        {%- endif  -%}
+        {%- if settings.mailing != blank  -%}
+        'mailing': {
+          'modalEnabled': '{{ settings.mailingModalEnabled }}',
+          'modalDelay': '{{ settings.mailingModalDelay }}',
+          'list': '{{ settings.mailing}}',
+        },
+        {%- endif  -%}
+        {%- if settings.freeGiftEnabled == true -%}
+        'freeGift': {
+          {%- if settings.freeGiftProduct != blank and all_products[settings.freeGiftProduct].variants[0].id -%}
+          'product': {
+            'id': {{ all_products[settings.freeGiftProduct].variants[0].id }},
+          },
+          'threshold': {{ settings.freeGiftThreshold }}
+          {%- endif -%}
+        },
+        {%- endif -%}
+        {%- if settings.giftWrappingEnabled == true -%}
+        'giftWrapping': {
+          'products': {
+            {%- if settings.giftWrapProduct1 != blank and all_products[settings.giftWrapProduct1].variants[0].id -%}
+            'tier1': {
+              'product': {
+                'id': {{ all_products[settings.giftWrapProduct1].variants[0].id }},
+              },
+              'threshold': {{ settings.giftWrapProduct1Threshold }}
+            },
+            {%- endif -%}
+            {%- if settings.giftWrapProduct2 != blank and all_products[settings.giftWrapProduct2].variants[0].id -%}
+            'tier2': {
+              'product': {
+                'id': {{ all_products[settings.giftWrapProduct2].variants[0].id }},
+              },
+              'threshold': {{ settings.giftWrapProduct2Threshold }}
+            },
+            {%- endif -%}
+            {%- if settings.giftWrapProduct3 != blank and all_products[settings.giftWrapProduct3].variants[0].id -%}
+            'tier3': {
+              'product': {
+                'id': {{ all_products[settings.giftWrapProduct3].variants[0].id }},
+              },
+              'threshold': {{ settings.giftWrapProduct3Threshold }}
+            }
+            {%- endif -%}
+          }
+        },
+        {%- endif -%}
+        {%- if settings.giftMessagingEnabled == true -%}
+        'giftMessaging': {
+          {%- if settings.giftMessagingProduct != blank and all_products[settings.giftMessagingProduct].variants[0].id -%}
+          'product': {
+            'id': {{ all_products[settings.giftMessagingProduct].variants[0].id }}
+          }
+          {%- endif -%}
+        }
+        {%- endif -%}
+      }
+    </script>
+
+    {{content_for_header}}
+
+    {% comment %} Anonymise GA IP addresses {% endcomment %}
+    <script>
+      if (window.ga) {
+        ga('set', 'anonymizeIp', true);
+      }
+    </script>
+
+    {% comment %} Custom head markup from theme settings {% endcomment %}
+    {% if settings.headMarkup %}
+      {{ settings.headMarkup }}
+    {% endif %}
+    
+  </head>
+  <body>
+    <div class="is-visually-hidden">
+
+      {% include 'sprite' %}
+
+    </div>
+
+    {% include 'header' with { inverted: inverted } %}
+
+    {% include 'cart' %}
+
+    <main class="main">
+
+      {{ content_for_layout }}
+
+      {% include 'services-form' %}
+      {% include 'services-thankyou' %}
+
+    </main>
+
+    {% include 'signup' %}
+
+    {% include 'footer' %}
+
+    {% include 'modal' %}
+
+    {% include 'signup-tab' %}
+
+    {% if settings.notificationEnabled %}
+      {% include 'notification' with {
+        message: settings.notification
+      } %}
+    {% endif %}
+
+    {% include 'consent' %}
+
+    {% comment %} {% include 'guide' %} {% endcomment %}
+
+    {% comment %} Custom body scripts markup from theme settings {% endcomment %}
+    {% if settings.bodyScripts %}
+      {{ settings.bodyScripts }}
+    {% endif %}
+
+  </body>
+</html>
+
+<!-- Begin Shopify-Afterpay JavaScript Snippet (v1.0.7) -->
+<script type="text/javascript">
+// Editable fields:
+var afterpay_min = 0.04;            // As per your Afterpay contract.
+var afterpay_max = 1000.00;         // As per your Afterpay contract.
+var afterpay_cbt_enabled = false;   // As per your Afterpay contract; change to true to display Cross-Border Trade artwork (for AU/NZ).
+var afterpay_logo_theme = 'colour'; // Can be 'colour', 'black' or 'white'.
+var afterpay_footer_logo_enabled = true;        // Can be true or false. Defaults to true for Snippet v1.0.5 and above.
+var afterpay_footer_logo_format = 'icon';       // Can be 'icon' (default), 'stacked' or 'logo'.
+var afterpay_footer_logo_theme = 'colour';      // Can be 'colour' (default), 'black' or 'white'.
+var afterpay_footer_logo_background = 'border'; // Can be 'border' (default) or 'transparent'.
+
+// Overrides:
+var afterpay_product_selector = '.product-panel__quantity';
+// var afterpay_product_css = {'margin-top': '15px'}
+
+// var afterpay_cart_integration_enabled = true;
+// var afterpay_cart_static_selector = '#cart-subtotal-selector';
+// var afterpay_cart_static_logo_theme = 'white';
+// var afterpay_cart_static_css = {'margin-top': '15px'}
+
+// var afterpay_variable_price_fallback_selector = '#product-price-selector';
+// var afterpay_variable_price_fallback_method = "interval";
+
+// var afterpay_modal_open_icon = true;
+
+// var afterpay_footer_logo_container = '.payment-icons';
+
+// Non-editable fields:
+var afterpay_shop_currency = {{ shop.currency | json }};
+var afterpay_cart_currency = {{ cart.currency.iso_code | json }};
+var afterpay_shop_money_format = {{ shop.money_format | json }};
+var afterpay_shop_permanent_domain = {{ shop.permanent_domain | json }};
+var afterpay_theme_name = {{ theme.name | json }};
+var afterpay_product = {{ product | json }};
+var afterpay_current_variant = {{ product.selected_or_first_available_variant | json }};
+var afterpay_cart_total_price = {{ cart.total_price | json }};
+var afterpay_js_snippet_version = '1.0.7';
+</script>
+<script type="text/javascript" src="https://static.afterpay.com/shopify-afterpay-javascript.js"></script>
+<!-- End Shopify-Afterpay JavaScript Snippet (v1.0.7) -->

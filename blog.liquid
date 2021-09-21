@@ -1,0 +1,65 @@
+{% if current_tags | size %}
+  {% assign activeTag = current_tags[0] %}
+{% else %}
+  {% assign activeTag = 'All' %}
+{% endif %}
+
+{% assign filterType = 'filter' %}
+{% assign allJournalArticles = blog.articles %}
+
+{% include 'masthead' with {
+  heading: 'Journal<span class="icon__diamond">&#9670;</span>1805',
+  collectionName: {{ blog.title }}
+  filter: true,
+  filterType: filterType,
+  tags: blog.all_tags,
+  activeTag: activeTag
+} %}
+
+{% paginate blog.articles by 12 %}
+  {% assign loadMoreEnabled = paginate.next.is_link == true %}
+  <section class="blogs">
+
+    {% if paginate.current_page > 1 %}
+
+      {% include 'journal-panel--end' with {
+        journalArticles: blog.articles
+        showFeatured: false
+      } %}
+
+    {% else %}
+
+      {% if current_tags | size > 0 %}
+        {% include 'journal-panel--end' with {
+          journalArticles: allJournalArticles
+          showFeatured: true
+        } %}
+      {% else %}
+        {% include 'journal-panel' with {
+          allJournalArticles: allJournalArticles
+          journalArticles: blog.articles
+        } %}
+      {% endif %}
+
+      <div class="load-more__container js-load-more__container">
+        <div class="load-more__heading">
+          <span class="load-more__heading-line"></span>
+          <h3 class="load-more__heading-text h3--primary">More Articles</h3>
+          <span class="load-more__heading-line"></span>
+        </div>
+        <div class="load-more__items js-load-more__items"></div>
+      </div>
+
+    {% endif %}
+
+    {% if paginate.next.url %}
+      {% include 'load-more' with {
+        nextPage: paginate.next.url,
+        type: 'blogs',
+        enabled: loadMoreEnabled
+      } %}
+    {% endif %}
+
+  </section>
+
+{% endpaginate %}
